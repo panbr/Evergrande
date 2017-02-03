@@ -1,0 +1,18 @@
+{
+  "name": "Evergrande",
+  "version": "1.0.0",
+  "description": "hengda football data",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "panbr",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.1.4",
+    "cheerio": "^0.22.0",
+    "eventproxy": "^0.3.5",
+    "express": "^4.14.1",
+    "superagent": "^3.4.1"
+  }
+}
