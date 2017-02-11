@@ -76,6 +76,33 @@ app.get("/advance", function(req, res, next) {
         })
 })
 
+/**
+ * 新闻列表
+ */
+app.get('/newsList', function(req, res, next) {
+    var newsListUrl = baseUrl + '/news.aspx?fid=110';
+    superagent.get(newsListUrl)
+        .end(function(err, sres) {
+            if (err) {
+                return next(err);
+            }
+            var $ = cheerio.load(sres.text);
+            var items = {
+                newsList: []
+            };
+            $('.Nlist ul li').each(function (idx, element) {
+                var $element = $(element);
+                items.newsList.push({
+                    time: $element.find('span').text().trim(),
+                    newsUrl: $element.find('a').attr('href').trim(),
+                    title: $element.find('a').text().trim()
+                })
+            })
+
+            res.send(items);
+        })
+})
+
 app.listen(3100, function(req, res) {
     console.log("app is running at http://localhost:3100");
 })
