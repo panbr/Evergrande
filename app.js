@@ -95,6 +95,7 @@ app.get('/newsList', function(req, res, next) {
                 items.newsList.push({
                     time: $element.find('span').text().trim(),
                     newsUrl: $element.find('a').attr('href').trim(),
+                    newsId: $element.find('a').attr('href').split('ftid=')[1],
                     title: $element.find('a').text().trim()
                 })
             })
