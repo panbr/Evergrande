@@ -3,6 +3,8 @@ var express = require("express");
 var superagent = require("superagent");
 var cheerio = require("cheerio");
 
+var superagentCharset = require("superagent-charset");
+
 var baseUrl = "http://www.gzevergrandefc.com";
 
 var app = express();
@@ -81,7 +83,8 @@ app.get("/advance", function(req, res, next) {
  */
 app.get('/newsList', function(req, res, next) {
     var newsListUrl = baseUrl + '/news.aspx?fid=110';
-    superagent.get(newsListUrl)
+    superagentCharset.get(newsListUrl)
+        .charset('utf-8')
         .end(function(err, sres) {
             if (err) {
                 return next(err);
@@ -123,7 +126,7 @@ app.get('/newsDetail', function(req, res, next) {
             };
             items.title = $(".Newstile>ul>span").text().trim();
             items.meta = $(".Newstile>ul>a").text().trim();
-            items.content = $(".NewsCont").html();
+            items.content = $(".NewsCont").text().split('\n');
 
             res.send(items);
         })
