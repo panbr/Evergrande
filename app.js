@@ -3,8 +3,6 @@ var express = require("express");
 var superagent = require("superagent");
 var cheerio = require("cheerio");
 
-var superagentCharset = require("superagent-charset");
-
 var baseUrl = "http://www.gzevergrandefc.com";
 
 var app = express();
@@ -83,8 +81,7 @@ app.get("/advance", function(req, res, next) {
  */
 app.get('/newsList', function(req, res, next) {
     var newsListUrl = baseUrl + '/news.aspx?fid=110';
-    superagentCharset.get(newsListUrl)
-        .charset('utf-8')
+    superagent.get(newsListUrl)
         .end(function(err, sres) {
             if (err) {
                 return next(err);
