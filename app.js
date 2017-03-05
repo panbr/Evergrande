@@ -103,6 +103,31 @@ app.get('/newsList', function(req, res, next) {
         })
 })
 
+/**
+ * 新闻详情
+ */
+app.get('/newsDetail', function(req, res, next) {
+    var id = req.query.id;
+    var newsDetailUrl = baseUrl + '/news.aspx?fid=110' + '&ftid=' + id;
+    superagent.get(newsDetailUrl)
+        .end(function(err, sres) {
+            if (err) {
+                return next(err);
+            }
+            var $ = cheerio.load(sres.text);
+            var items = {
+                title: '',
+                meta: '',
+                content: ''
+            };
+            items.title = $(".Newstile>ul>span").text().trim();
+            items.meta = $(".Newstile>ul>a").text().trim();
+            items.content = $(".NewsCont").html();
+
+            res.send(items);
+        })
+})
+
 app.listen(3100, function(req, res) {
     console.log("app is running at http://localhost:3100");
 })
